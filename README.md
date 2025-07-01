@@ -3,11 +3,16 @@
 
 The script is currently utilizing only basic keys of a typical 60% keyboard, so it can adapt to basically any type of keyboard out there that do not have any VIA/QMK/firmware support (let's be real, if your keyboard has a driver firmware you'd use it anyway instead of AHK), regardless of the size (60%, 68%, TKL, etc). I'm currently using this script only when I'm not having my external keyboard around - it's quite handy if you ask me. 
 
-![[lenovokeyboard.png]]
-***The script focuses heavily on keys within the highlighted area, effectively turning the Lenovo Legion’s full-size keyboard into a 60% layout while still maintaining full functionality.***
+<p align="center">
+  <img src="lenovokeyboard.png" alt="Lenovo keyboard layout" width="600">
+  <br>
+  <em>The script focuses heavily on keys within the highlighted area, effectively turning the Lenovo Legion’s full-size keyboard into a 60% layout while still maintaining full functionality.</em>
+</p>
 
 ---
+
 ### Contents
+
 - [Features](#my-current-script-has-2-layouts-as-the-main-feature)
 - [Illustrations](#these-images-illustrate-the-lenovo-legion-keyboard-after-applying-the-script-using-a-generic-60-layout-arrow-keys-arent-shown)
 - [Implementing the script](#how-to-use-my-script)

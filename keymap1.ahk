@@ -1,4 +1,4 @@
-﻿#UseHook
+#UseHook
 #MaxHotkeysPerInterval 200
 #HotkeyInterval 50
 #KeyHistory 0
@@ -15,7 +15,7 @@ SetWorkingDir %A_ScriptDir%
 CapsLock::LAlt
 [::PrintScreen
 ]::Delete
-`::Esc
+::Esc
 
 ; -------------------
 ; Alt-layer toggle (both LAlt and RAlt)
@@ -35,7 +35,7 @@ layerActive := false
 return
 
 ; -------------------
-; Alt-layer mappings
+; Alt-layer mappings (only active while holding Alt)
 ; -------------------
 #If (layerActive)
 q::1
@@ -65,17 +65,24 @@ p::0
 j::Left
 k::Up
 l::Down
-`;::Right
+;::Right
 
 s::]
 d::)
 
-#If (layerActive)
+g::\
+z::CapsLock
+v::=
+c::-
+Tab::Send, `
+Left::Volume_Down
+Down::Volume_Mute
+Right::Volume_Up
+
+; Tap dance for f
 *f::
     global f_lastTap, f_tapCount
-
-    if (!f_lastTap)
-    {
+    if (!f_lastTap) {
         f_lastTap := 0
         f_tapCount := 0
     }
@@ -100,6 +107,7 @@ f_singleTap:
     SendInput (
 return
 
+; Tap dance for a
 *a::
     global a_lastTap, a_tapCount
     if (!a_lastTap) {
@@ -135,19 +143,17 @@ a_singleTap:
         SendInput [
     }
 return
+#If  ; End of Alt-layer block
 
-g::\
-z::CapsLock
-v::=
-c::-
-Tab::Send, ``
-Left::Volume_Down
-Down::Volume_Mute
-Right::Volume_Up
+; -------------------
+; Double quote tap dance (Shift + ')
+; -------------------
+*'::  ; Always active
+    if !GetKeyState("Shift", "P") {
+        SendInput '
+        return
+    }
 
-#If
-
-*'::
     global quote_lastTap, quote_tapCount
     if (!quote_lastTap) {
         quote_lastTap := 0
@@ -164,20 +170,12 @@ Right::Volume_Up
     if (quote_tapCount = 2) {
         quote_tapCount := 0
         SetTimer, quote_singleTap, Off
-        if GetKeyState("Shift", "P") {
-            SendInput ""{Left}
-        } else {
-            SendInput ''{Left}
-        }
+        SendInput ""{Left}
     } else {
         SetTimer, quote_singleTap, -200
     }
 return
 
 quote_singleTap:
-    if GetKeyState("Shift", "P") {
-        SendInput "
-    } else {
-        SendInput '
-    }
+    SendInput "
 return

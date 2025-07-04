@@ -29,15 +29,15 @@ ___
   - Holding `LAlt` or `RAlt` toggles the alternative layout.
  
 2. Alternative layout:
-	- Replaced the number row keys (from `1` to `+`) with function keys from `F1` to `F12`.
-	- Replaced the top row keys (from `Q` to `P`) with numbers from `1` to `0`.
-	- `a` and `s` keys would act as `[` and `]`, respectively.
-	    *- With `Shift`, they print `{` and `}` 
-	- `f` and `d` outputs `(` and `)`
-		*- Tap dance for `f` so that when pressed twice, it'd print `()` and move the cursor  inside the parentheses.
-	- `g` would print out `\`
-		*- With `Shift`, it'd print `|`
-	- `Left` is Volume Down, `Down` is Mute/Unmute and `Right` is Volume Up.
+- Replaced the number row keys (from `1` to `+`) with function keys from `F1` to `F12`.
+- Replaced the top row keys (from `Q` to `P`) with numbers from `1` to `0`.
+- `a` and `s` keys would act as `[` and `]`, respectively.
+	- *With `Shift`, they print `{` and `}`* 
+- `f` and `d` outputs `(` and `)`
+	- *Tap dance for `f` so that when pressed twice, it'd print `()` and move the cursor  inside the parentheses.*
+- `g` would print out `\`
+	 - *With `Shift`, it'd print `|`*
+- `Left` is Volume Down, `Down` is Mute/Unmute and `Right` is Volume Up.
 ---
 ### These images illustrate the Lenovo Legion keyboard after applying the script, using a generic 60% layout (arrow keys aren't shown):
 

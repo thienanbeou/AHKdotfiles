@@ -61,8 +61,8 @@ ___
 3. Run the script. 
 ---
 ### Known issues/Future development:
-- There seems to be a problem with the `Alt + Shift + a` combo, which can't properly produce `{`
-	- Also, tap dance with the combo is quite clunky ATM
+~~- There seems to be a problem with the `Alt + Shift + a` combo, which can't properly produce `{`
+	- Also, tap dance with the combo is quite clunky ATM~~ the whole `Alt + a` is really clunky, but not `Alt + s`, idk why.
 - There's still room for other keys that aren't mentioned (PgUp, PgDown, Home, End, etc).
 ---
 ### Afterwords:

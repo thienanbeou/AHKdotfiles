@@ -15,7 +15,7 @@ SetWorkingDir %A_ScriptDir%
 CapsLock::LAlt
 [::PrintScreen
 ]::Delete
-::Esc
+`::Esc
 
 ; -------------------
 ; Alt-layer toggle (both LAlt and RAlt)
@@ -74,7 +74,7 @@ g::\
 z::CapsLock
 v::=
 c::-
-Tab::Send, `
+Tab::Send, ``
 Left::Volume_Down
 Down::Volume_Mute
 Right::Volume_Up

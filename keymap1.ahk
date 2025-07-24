@@ -65,7 +65,7 @@ p::0
 j::Left
 k::Up
 l::Down
-;::Right
+`;::Right
 
 s::]
 d::)

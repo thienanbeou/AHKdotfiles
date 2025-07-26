@@ -62,7 +62,8 @@ ___
 ---
 ### Known issues/Future development:
 - ~~There seems to be a problem with the `Alt + Shift + a` combo, which can't properly produce `{`~~
-	- ~~Also, tap dance with the combo is quite clunky ATM~~ the whole `Alt + a` is really clunky, but not `Alt + s`, idk why.
+	- ~~Also, tap dance with the combo is quite clunky ATM~~ ~~the whole `Alt + a` is really clunky, but not `Alt + s`, idk why.~~
+   just double tap fast enough to trigger tap dance, that's it. 
 - There's still room for other keys that aren't mentioned (PgUp, PgDown, Home, End, etc).
 ---
 ### Afterwords:

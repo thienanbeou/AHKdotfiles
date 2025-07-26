@@ -75,6 +75,7 @@ z::CapsLock
 v::=
 c::-
 Tab::Send, ``
++Tab::SendInput ~
 Left::Volume_Down
 Down::Volume_Mute
 Right::Volume_Up

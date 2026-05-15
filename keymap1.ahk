@@ -1,16 +1,17 @@
 #UseHook
+#NoEnv
+#KeyHistory 0
 #MaxHotkeysPerInterval 200
 #HotkeyInterval 50
-#KeyHistory 0
+#SingleInstance Force
+
+SendMode Input
 SetBatchLines, -1
 ListLines, Off
-
-#NoEnv
-SendMode Input
 SetWorkingDir %A_ScriptDir%
 
 ; -------------------
-; QWERTY maps
+; Always-active QWERTY maps
 ; -------------------
 CapsLock::LAlt
 [::PrintScreen
@@ -18,26 +19,24 @@ CapsLock::LAlt
 `::Esc
 
 ; -------------------
-; Alt-layer toggle (both LAlt and RAlt)
+; Alt-layer activation
+; Works with LAlt, RAlt, and CapsLock because CapsLock is remapped to LAlt
 ; -------------------
 layerActive := false
 
 $*LAlt::
-layerActive := true
-KeyWait, LAlt
-layerActive := false
-return
-
 $*RAlt::
-layerActive := true
-KeyWait, RAlt
-layerActive := false
+    layerActive := true
+    KeyWait, % SubStr(A_ThisHotkey, 3)
+    layerActive := false
 return
 
 ; -------------------
-; Alt-layer mappings (only active while holding Alt)
+; Alt-layer mappings
 ; -------------------
 #If (layerActive)
+
+; Number row under QWERTY row
 q::1
 w::2
 e::3
@@ -49,6 +48,7 @@ i::8
 o::9
 p::0
 
+; Function keys
 1::F1
 2::F2
 3::F3
@@ -62,121 +62,104 @@ p::0
 -::F11
 =::F12
 
+; Navigation
 j::Left
 k::Up
 l::Down
 `;::Right
 
+; Symbols
+a::AltLayer_A()
+f::AltLayer_F()
 s::]
 d::)
-
 g::\
+x::!
 z::CapsLock
 v::=
 c::-
-Tab::Send, ``
+Tab::SendInput ``
 +Tab::SendInput ~
+
+; Volume
 Left::Volume_Down
 Down::Volume_Mute
 Right::Volume_Up
 
-; Tap dance for f
-*f::
-    global f_lastTap, f_tapCount
-    if (!f_lastTap) {
-        f_lastTap := 0
-        f_tapCount := 0
-    }
-
-    if (A_TickCount - f_lastTap < 200) {
-        f_tapCount += 1
-    } else {
-        f_tapCount := 1
-    }
-    f_lastTap := A_TickCount
-
-    if (f_tapCount = 2) {
-        f_tapCount := 0
-        SetTimer, f_singleTap, Off
-        SendInput (){Left}
-    } else {
-        SetTimer, f_singleTap, -200
-    }
-return
-
-f_singleTap:
-    SendInput (
-return
-
-; Tap dance for a
-*a::
-    global a_lastTap, a_tapCount
-    if (!a_lastTap) {
-        a_lastTap := 0
-        a_tapCount := 0
-    }
-
-    if (A_TickCount - a_lastTap < 200) {
-        a_tapCount += 1
-    } else {
-        a_tapCount := 1
-    }
-    a_lastTap := A_TickCount
-
-    if (a_tapCount = 2) {
-        a_tapCount := 0
-        SetTimer, a_singleTap, Off
-
-        if GetKeyState("Shift", "P") {
-            SendInput {{}{}}{Left}
-        } else {
-            SendInput []{Left}
-        }
-    } else {
-        SetTimer, a_singleTap, -200
-    }
-return
-
-a_singleTap:
-    if GetKeyState("Shift", "P") {
-        SendInput {
-    } else {
-        SendInput [
-    }
-return
-#If  ; End of Alt-layer block
+#If
 
 ; -------------------
-; Double quote tap dance (Shift + ')
+; Always-active quote tap dance
+; Shift + ' once  -> "
+; Shift + ' twice -> "" with cursor inside
+; ' without Shift -> '
 ; -------------------
-*'::  ; Always active
+*'::
     if !GetKeyState("Shift", "P") {
         SendInput '
         return
     }
 
-    global quote_lastTap, quote_tapCount
-    if (!quote_lastTap) {
-        quote_lastTap := 0
-        quote_tapCount := 0
-    }
-
-    if (A_TickCount - quote_lastTap < 200) {
-        quote_tapCount += 1
-    } else {
-        quote_tapCount := 1
-    }
-    quote_lastTap := A_TickCount
-
-    if (quote_tapCount = 2) {
-        quote_tapCount := 0
-        SetTimer, quote_singleTap, Off
-        SendInput ""{Left}
-    } else {
-        SetTimer, quote_singleTap, -200
-    }
+    TapDance("quote", """", """""" "{Left}")
 return
 
-quote_singleTap:
-    SendInput "
+; -------------------
+; Tap dance functions
+; -------------------
+
+AltLayer_F() {
+    TapDance("f", "(", "(){Left}")
+}
+
+AltLayer_A() {
+    if GetKeyState("Shift", "P") {
+        TapDance("a", "{", "{{}{}}{Left}")
+    } else {
+        TapDance("a", "[", "[]{Left}")
+    }
+}
+
+TapDance(name, singleOutput, doubleOutput, delay := 200) {
+    static lastTap := {}
+    static tapCount := {}
+
+    now := A_TickCount
+
+    if (!lastTap.HasKey(name)) {
+        lastTap[name] := 0
+        tapCount[name] := 0
+    }
+
+    if (now - lastTap[name] < delay) {
+        tapCount[name] += 1
+    } else {
+        tapCount[name] := 1
+    }
+
+    lastTap[name] := now
+
+    if (tapCount[name] = 2) {
+        tapCount[name] := 0
+        SetTimer, % name "_SingleTap", Off
+        SendInput % doubleOutput
+    } else {
+        global TapDanceOutputs
+        if (!IsObject(TapDanceOutputs))
+            TapDanceOutputs := {}
+
+        TapDanceOutputs[name] := singleOutput
+        SetTimer, % name "_SingleTap", % -delay
+    }
+}
+
+f_SingleTap:
+a_SingleTap:
+quote_SingleTap:
+    global TapDanceOutputs
+
+    name := StrReplace(A_ThisLabel, "_SingleTap")
+
+    if (IsObject(TapDanceOutputs) && TapDanceOutputs.HasKey(name)) {
+        SendInput % TapDanceOutputs[name]
+    }
 return

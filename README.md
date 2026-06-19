@@ -24,7 +24,7 @@ ___
 1. Basic QWERTY layout:
   - \` key replaced with ESC, aimed to trim the whole F row. 
   - `CAPS` key replaced with `ALT`.
-  - `[` and `]` are remapped with PrintScreen and Delete perspectively. 
+  - `[` and `]` are remapped with PrintScreen and Delete respectively. 
   - Tap dance for `"` so that upon pressing the key twice, it'd print out `""` and move the cursor between the double quotes, which makes it more convenient for the user. 
   - Holding `LAlt` or `RAlt` toggles the alternative layout.
  
@@ -64,7 +64,7 @@ ___
 - ~~There seems to be a problem with the `Alt + Shift + a` combo, which can't properly produce `{`~~
 	- ~~Also, tap dance with the combo is quite clunky ATM~~ ~~the whole `Alt + a` is really clunky, but not `Alt + s`, idk why.~~
    just double tap fast enough to trigger tap dance, that's it. 
-- There's still room for other keys that aren't mentioned (PgUp, PgDown, Home, End, etc).
+- ~~There's still room for other keys that aren't mentioned (PgUp, PgDown, Home, End, etc).~~. Only the Insert key is missing on this keymap, and tbh idk what's the functionality of it.  
 ---
 ### Afterwords:
 This is just my personal AHK script that aims to improve ***my*** typing experience, but if it happends to be helpful to you too - that's great!

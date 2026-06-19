@@ -67,6 +67,10 @@ j::Left
 k::Up
 l::Down
 `;::Right
+m::Home
+,::End
+.::PgUp
+/::PgDn
 
 ; Symbols
 a::AltLayer_A()
